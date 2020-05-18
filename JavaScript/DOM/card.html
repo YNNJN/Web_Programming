@@ -11,6 +11,7 @@
     <title>card</title>
   </head>
   <body>
+    <button class="btn btn-primary" onclick="createCard()">CreateCard</button>
     <div class="container">
 
       <div id="cardArea" class="row">
@@ -29,38 +30,40 @@
 
     <script>
       
-      const card = document.createElement('div')
-      card.classList.add('card', 'col-4')
-      
-      const cardImage = document.createElement('img')
-      cardImage.src = 'https://picsum.photos/200'
-      cardImage.classList.add('card-img-top')
-      cardImage.alt = 'random-image'
+      function createCard(){
+        const card = document.createElement('div')
+        card.classList.add('card', 'col-4')
 
-      const cardBody = document.createElement('div')
-      cardBody.classList.add('card-body')
+        const cardImage = document.createElement('img')
+        cardImage.src = 'https://picsum.photos/200'
+        cardImage.classList.add('card-img-top')
+        cardImage.alt = 'random-image'
 
-      const cardTitle = document.createElement('h5')
-      cardTitle.classList.add('card-title')
-      cardTitle.innerText = '<a>Test title</a>'
+        const cardBody = document.createElement('div')
+        cardBody.classList.add('card-body')
 
-      const cardText = document.createElement('p')
-      cardText.classList.add('card-text')
-      cardText.innerHTML = '<a>hi</a>'
+        const cardTitle = document.createElement('h5')
+        cardTitle.classList.add('card-title')
+        cardTitle.innerText = '<a>Test title</a>'
 
-      const cardButton = document.createElement('a')
-      cardButton.classList.add('btn', 'btn-primary')
-      cardButton.href = '#'
-      cardButton.innerText = 'Go somewhere'
+        const cardText = document.createElement('p')
+        cardText.classList.add('card-text')
+        cardText.innerHTML = '<a>hi</a>'
 
-      // appendChild: Node 한개만 추가 가능
-      // append: Node 여러개 가능 + Text 도 가능
-      cardBody.append(cardTitle, cardText, cardButton)
-      card.append(cardImage, cardBody)
-      
-      // div#cardArea
-      const cardArea = document.querySelector('#cardArea')
-      cardArea.appendChild(card)
+        const cardButton = document.createElement('a')
+        cardButton.classList.add('btn', 'btn-primary')
+        cardButton.href = '#'
+        cardButton.innerText = 'Go somewhere'
+
+        // appendChild: Node 한개만 추가 가능
+        // append: Node 여러개 가능 + Text 도 가능
+        cardBody.append(cardTitle, cardText, cardButton)
+        card.append(cardImage, cardBody)
+        
+        // div#cardArea
+        const cardArea = document.querySelector('#cardArea')
+        cardArea.appendChild(card)
+      }
       
     </script>
   </body>
