@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>function adv</title>
+</head>
+<body>
+  <script>
+    // 1. default args (기본 인자)
+    function defaultArgs(a=1, b=2) {
+      console.log(a + b)
+      // return a + b
+    }
+
+    defaultArgs() // 3
+    defaultArgs(20, 30) // 50
+
+    // 2. JS 함수의 인자 개수
+    // 인자 개수에 대한 에러가 안 뜸 // output: undefined
+    function wrongArgCount(a, b) {
+      console.log(a, b)
+    }
+
+    wrongArgCount() // undefined
+    wrongArgCount(1) // 1 undefined
+    wrongArgCount(1, 2, 3) // 1 2
+
+    function noArgs() {
+      console.log('no args..')
+    }
+    noArgs(1, 2, 3, 4, 5, 6) // no args..
+
+    // 3. JS rest parameter
+    // 파이썬에서의 def a(*args)
+    // js에서는 * -> ...
+    function restParameter1(...numbers) {
+      console.log(numbers)
+    }
+
+    restParameter1(1, 2, 3, 4, 5) // [1, 2, 3, 4, 5]
+
+    function restParameter2(a, b, ...numbers) {
+      console.log(a, b, numbers)
+    }
+
+    restParameter2(1, 2, 3, 4, 5) // 1 2 [3, 4, 5]
+
+    // 4. JS spread operator
+    function spreadOperator(a, b, c) {
+      console.log(a, b, c)
+    }
+
+    let numbers = [1, 2, 3]
+
+    spreadOperator(numbers[0], numbers[1], numbers[2]) // 1 2 3
+    spreadOperator(...numbers) // 1 2 3
+    numbers = [1, 2, 3, 4]
+    spreadOperator(...numbers) // 1 2 3
+
+    // 배열 합치기
+    let newNumbers = [0, ...numbers, 5]
+    console.log(newNumbers) // [0, 1, 2, 3, 4, 5]
+
+    // copy.copy
+    newNumbers = numbers // [1, 2, 3, 4] // copy x
+    newNumbers = [...numbers] // [1, 2, 3, 4] // shallow copy
+    
+  </script>
+</body>
+</html>
