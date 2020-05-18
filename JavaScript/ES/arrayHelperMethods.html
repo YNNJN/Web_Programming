@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Helper Methods</title>
+</head>
+<body>
+  <script>
+    /* 
+      callback function(콜백 함수)
+      A callback function is a function passed into another function as an argument,
+      which is then invoked inside the outer function to complete some kind of routine or action.
+      즉 지금 당장 내가 실행하는 것이 아니라, 다른 누군가가 때가 되면 실행해주는 함수
+    */
+   
+    // 1. map
+    ['1', '2', '3'].map(Number) // [1, 2, 3]
+
+    const numbers = [0, 9, 99]
+    function addOne(number) {
+      return number + 1
+    }
+    
+    const newNumbers1 = numbers.map(addOne)
+    const newNumbers2 = [0, 9, 99].map(function(number) { 
+      // [0, 9, 99] 를 순회하며, 각 요소를 (number) 자리에 넣음
+      // 그리고 리턴된 값을 새로운 배열에 넣고 마지막에 리턴함
+      return number + 1
+    })
+    console.log(newNumbers1, newNumbers2) // [1, 10, 100] [1, 10, 100]
+
+
+    // 2. forEach
+    const newNumbers = [1, 2, 3]
+    
+    let sum = 0
+    newNumbers.forEach(function(number) {
+      // numbers 의 각 요소를 number 자리에 넣고
+      // 나머지는 알아서. 리턴 없음
+      sum += number
+    })
+    console.log(newNumbers) // [1, 2, 3]
+
+    
+    // 3. filter
+    const odds = [1, 2, 3].filter(function(number) {
+      // 각 요소를 number 자리에 넣고
+      // 리턴이 true 인 요소들만 모아서 새로운 배열로 리턴함
+      return number % 2 === 1
+    })
+    console.log(odds) // [1, 3]
+
+  </script>
+</body>
+</html>
