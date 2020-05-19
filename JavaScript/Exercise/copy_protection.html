@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <p>안녕하세요 복사는 안됩니다 안됩니다 안</p>
+
+  <script>
+    document.addEventListener('copy', function(event) {
+      event.preventDefault() // 이벤트를 납치해서, 동작하지 않게 함
+      alert('복사하지말라고요~')
+    })
+    console.log('hello')
+  </script>
+</body>
+</html>
