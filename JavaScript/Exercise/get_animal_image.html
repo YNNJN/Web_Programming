@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>exercise</title>
+</head>
+<body>
+  <h1>Animal Image(s)</h1>
+  <hr>
+
+  <h2>강아지와 고양이</h2>
+  <button id="dog">강아지</button>
+  <button id="cat">고양이</button>
+  <div class="animals"></div>
+  
+  <!-- Axios 설정 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 여기에 코드를 작성하시오.
+    // 강아지 - https://dog.ceo/api/breeds/image/random
+    // 고양이 - https://api.thecatapi.com/v1/images/search
+    
+    /* 단계
+    1. 강아지 버튼을 누른다
+    2. 강아지 이미지를 요청한다
+    3. (강아지 이미지가 도착하면) 이미지를 응답 결과에서 꺼낸다
+    4. 이미지 태그를 만들어서 속성으로 강아지 이미지 주소를 추가한다
+    5. 만든 이미지 태그를 화면에 추가한다
+    */
+    /* 설정 test
+    axios.get('https://dog.ceo/api/breeds/image/random')
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    */
+    
+    
+    const dogImagebtn = document.querySelector('#dog')
+    /* 
+    // M1
+    dogImagebtn.addEventListener('click', function(e) {
+      axios.get('https://dog.ceo/api/breeds/image/random')
+        .then(res => {
+          const dogImageUrl = res.data.message
+          const dogImageTag = document.createElement('img')
+          dogImageTag.src = dogImageUrl
+          dogImageTag.style.height = '100px'
+          dogImageTag.style.width = '100px'
+          const dogList = document.querySelector('.animals')
+          dogList.appendChild(dogImageTag)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    })
+    */
+
+    // M2 (이미 정의한 함수를 넘겨주는 방식)
+
+    const getDogImage = function() {
+      axios.get('https://dog.ceo/api/breeds/image/random')
+        .then(res => {
+          const dogImageUrl = res.data.message
+          const dogImageTag = document.createElement('img')
+          dogImageTag.src = dogImageUrl
+          dogImageTag.style.height = '100px'
+          dogImageTag.style.width = '100px'
+          const dogList = document.querySelector('.animals')
+          dogList.appendChild(dogImageTag)
+        })
+    }
+    dogImagebtn.addEventListener('click', getDogImage)
+
+
+    const catImagebtn = document.querySelector('#cat')
+
+    const getCatImage = function() {
+      axios.get('https://api.thecatapi.com/v1/images/search')
+        .then(res => {
+          const catImageUrl = res.data[0].url
+          const catImageTag = document.createElement('img')
+          catImageTag.src = catImageUrl
+          catImageTag.style.height = '100px'
+          catImageTag.style.width = '100px'
+          const catList =document.querySelector('.animals')
+          catList.appendChild(catImageTag)
+        })
+    }
+    catImagebtn.addEventListener('click', getCatImage)
+    
+  </script>
+</body>
+</html>
+
+   
