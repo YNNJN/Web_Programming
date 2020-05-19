@@ -6,7 +6,7 @@
   <title>0518 exercise & workshop</title>
 </head>
 <body>
-  <h2>Add New Todo: </h2>
+  <h2>Add New Todo</h2>
   <p id="add-new-todo">    
   </p>
   <hr>
@@ -17,7 +17,7 @@
   <hr>
 
   <h2>Completed Tasks</h2>
-  <ul>
+  <ul id="completed-tasks">
   </ul>
   <hr>
   <!--
@@ -53,9 +53,11 @@
     // ===========================================
     // Add New Todo
     // ===========================================
-
+    
     const addNewTodo = document.querySelector('#add-new-todo')
     const todoForm = document.createElement('form')
+    const todoList = document.querySelector('#todo-list')
+    const completedTaskList = document.querySelector('#completed-tasks')
     
     const todoLabel = document.createElement('label')
     todoLabel.innerText = 'Add New Todo: '
@@ -74,6 +76,14 @@
     
     const todoButton = document.createElement('button')
     todoButton.innerText = 'Add'
+    todoButton.addEventListener('click', function(event) {
+      // console.log(event) // 버튼이 form 안에 있어서 순간적으로만 촐력됨
+      event.preventDefault() // 이 때 이것을 사용!
+      // console.log(todoInput.value) // 인풋태그에 담긴 값을 가져옴
+      const newTodo = createTodo(todoInput.value)
+      todoList.appendChild(newTodo)
+      todoInput.value = null
+    })
     
 
     todoForm.appendChild(todoLabel)
@@ -89,24 +99,57 @@
     // ===========================================
 
     const createTodo = function(todoName) {
+      // li 태그 생성하기
       const newLi = document.createElement('li')
-
+      // form 태그 생성하기
       const newLiForm = document.createElement('form')
-
-      const newLiCheck = document.createElement('input')
-      newLiCheck.type = 'checkbox'
 
       const newLiLabel = document.createElement('label')
       newLiLabel.innerText = `${todoName}`
+
+      const newLiCheck = document.createElement('input')
+      newLiCheck.type = 'checkbox'
+      newLiCheck.addEventListener('change', function(event) {
+        // console.log(event) 1. 이벤트가 잘 걸리는지 확인한다
+        // 2. 어디에 걸리는지 확인한다 - target: input, checked: true
+        console.log(event.target.checked)
+        if (event.target.checked) {
+          newLiLabel.style.textDecoration = 'line-through'
+          newLiInput.disabled = true // todo 완료시 입력 방지
+          completedTaskList.appendChild(newLi)
+        } else {
+          newLiLabel.style.textDecoration = null
+          todoList.appendChild(newLi)
+        }
+      }) // input 태그에 사용하는 이벤트
+
+      // appendChild()만으로 '옮겨갈' 수 있는 이유
+      // 지정된 자식이 문서의 기존 노드에 대한 참조 인 경우 appendChild()현재 위치에서 새 위치로 이동함
+      // 다른 노드에 추가하기 전에 부모 노드에서 노드를 제거 할 필요 x
+      // 이는 노드가 문서의 두 지점에 동시에있을 수 없음을 의미
+      // 따라서 노드에 이미 부모가있는 경우 노드가 먼저 제거 된 다음 새 위치에 추가됨
 
       const newLiInput = document.createElement('input')
       newLiInput.setAttribute('type', 'text')
 
       const editButton = document.createElement('button')
       editButton.innerText = 'edit'
+      editButton.addEventListener('click', function(event) {
+        event.preventDefault()
+        if (newLiInput.value) { // 값이 있을 때만 수정
+          newLiLabel.innerText = newLiInput.value
+          newLiInput.value = null
+        }
+      })
 
       const deleteButton = document.createElement('button')
       deleteButton.innerText = 'delete'
+      deleteButton.addEventListener('click', function() { // 화살표 함수 x
+        event.preventDefault()
+        newLi.remove()
+        console.log('okkkkkk')
+      })
+
 
       newLiForm.append(newLiCheck, newLiLabel, newLiInput, editButton, deleteButton)
       newLi.appendChild(newLiForm)
@@ -116,20 +159,7 @@
       return newLi
 
     }
-    
-    const todoList = document.querySelector('#todo-list')
-
-    const myTextList = [
-      'Django ModelForm 복습',
-      'Javascript DOM 조작 복습',
-      'Django static, media 복습'
-    ]
-
-    myTextList.forEach(todoName => {
-      const todo = createTodo(todoName) // newLi
-      todoList.appendChild(todo)
-    })
-
+  
   </script>
 </body>
 </html>
