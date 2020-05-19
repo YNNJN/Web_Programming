@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>0518 exercise & workshop</title>
+</head>
+<body>
+  <h2>Add New Todo: </h2>
+  <p id="add-new-todo">    
+  </p>
+  <hr>
+
+  <h2>Todo List</h2>
+  <ul id="todo-list">
+  </ul>
+  <hr>
+
+  <h2>Completed Tasks</h2>
+  <ul>
+  </ul>
+  <hr>
+  <!--
+  <h2>Add New Todo</h2>
+  <p>
+    <form action="">
+      <label for="">Add New Todo: </label>
+      <input tyoe="text" id="todoInput">
+      <button>Add</button>
+    </form>
+
+  </p>
+  <hr>
+
+  <h2>Todo List</h2>
+  <ul>
+    <li>
+      <input type="checkbox">
+      <label for="">Django ModelForm 복습</label>
+      <input type="text">
+      <button>edit</button>
+      <button>delete</button>
+    </li>
+  </ul>
+  <hr>
+
+  <h2>Completed Tasks</h2>
+  <ul></ul>
+  <hr>
+  -->
+
+  <script>
+    // ===========================================
+    // Add New Todo
+    // ===========================================
+
+    const addNewTodo = document.querySelector('#add-new-todo')
+    const todoForm = document.createElement('form')
+    
+    const todoLabel = document.createElement('label')
+    todoLabel.innerText = 'Add New Todo: '
+    // for 속성은 다른 이름으로 접근해야
+    // todoLabel.htmlFor = 'todoInput'
+    // 이 때 setAttribute()를 사용하면 편함. 일반적으로 알고 있는 태그의 이름을 넣을 수 있으니
+    todoLabel.setAttribute('for', 'todoInput')
+
+    const todoInput = document.createElement('input')
+    todoInput.id = 'todoInput'
+    // 속성 지정 방법 1
+    // todoInput.type = 'text'
+
+    // 속성 지정 방법 2
+    todoInput.setAttribute('type', 'text')
+    
+    const todoButton = document.createElement('button')
+    todoButton.innerText = 'Add'
+    
+
+    todoForm.appendChild(todoLabel)
+    todoForm.appendChild(todoInput)
+    todoForm.appendChild(todoButton)
+
+    addNewTodo.appendChild(todoForm)
+    console.log(todoForm)
+
+
+    // ===========================================
+    // Todo List
+    // ===========================================
+
+    const createTodo = function(todoName) {
+      const newLi = document.createElement('li')
+
+      const newLiForm = document.createElement('form')
+
+      const newLiCheck = document.createElement('input')
+      newLiCheck.type = 'checkbox'
+
+      const newLiLabel = document.createElement('label')
+      newLiLabel.innerText = `${todoName}`
+
+      const newLiInput = document.createElement('input')
+      newLiInput.setAttribute('type', 'text')
+
+      const editButton = document.createElement('button')
+      editButton.innerText = 'edit'
+
+      const deleteButton = document.createElement('button')
+      deleteButton.innerText = 'delete'
+
+      newLiForm.append(newLiCheck, newLiLabel, newLiInput, editButton, deleteButton)
+      newLi.appendChild(newLiForm)
+
+      // const todoList = document.querySelector('#todo-list')
+      // todoList.append(newLi)
+      return newLi
+
+    }
+    
+    const todoList = document.querySelector('#todo-list')
+
+    const myTextList = [
+      'Django ModelForm 복습',
+      'Javascript DOM 조작 복습',
+      'Django static, media 복습'
+    ]
+
+    myTextList.forEach(todoName => {
+      const todo = createTodo(todoName) // newLi
+      todoList.appendChild(todo)
+    })
+
+  </script>
+</body>
+</html>
