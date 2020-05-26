@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{ greeting }} <!-- mustache 표현법 -->
+    <p>{{ 'wow!!! ' + greeting }}</p> <!-- 간단한 자바스크립트 표현식을 사용 가능 -->
+    <p>{{ excited ? greeting : 'vue 조금 낯설어...'}}</p> <!-- 삼항연산자, console창에서 조작해보기 -> 바로 반응 -->
+    <p v-bind:title="hiddenMessage">이곳 위에 마우스를 올려보세요</p> <!-- title 속성을 data와 연결 -->
+  </div>
+  
+  <!-- vue cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app', // 뷰로 관리할 돔을 설정함, 가장 바깥에 있는 태그의 id 값
+      data: {
+        greeting: 'hello, vue',
+        excited: true,
+        hiddenMessage: '메롱~~',
+      },
+    })
+  </script>
+
+</body>
+</html>

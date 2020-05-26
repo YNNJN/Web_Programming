@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1>강아지 사진 가져오기</h1>
+    <div class="dog-list">
+      <!-- 강아지 사진 출력하는 부분 -->
+      <img v-for="dogImage in dogImageList" v-bind:src="dogImage" alt="dogImage">
+    </div>
+    <button v-on:click="getDogImage">강아지 가져오기</button>
+  </div>
+
+  <!-- vue cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- axios cdn-->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        dogImageList: [],
+      },
+      methods: {
+        getDogImage: function() {
+          // 요청 주소: http://dog.ceo/api/breeds/image/random
+          axios.get('http://dog.ceo/api/breeds/image/random')
+            .then(response => {
+              const src = response.data.message
+              this.dogImageList.push(src)
+            })
+        },
+        getCatImage: function() {
+          // 요청 주소: https://api.thecatapi.com/v1/images/search
+          axios.get('https://api.thecatapi.com/v1/images/search')
+            .then(response => {
+              const src = response.data[0]
+            })
+        },
+      },
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="vue-directive-practice">
+      <h1>Directive Practice</h1>
+      <hr>
+      <!-- 1. v-if -->
+      <h2>v-if</h2>
+      <p v-if="seen"> now you see me</p>
+      <!-- 기본적인 자바스크립트 표현도 가능함 -->
+      <p v-if="seen === '안녕'">안녕?</p>
+      <p v-else-if="seen === '반가워'">반가워!</p>
+      <p v-else>안녕 뷰 만나서 반가워</p>
+      <!-- false일 때만 보여주기 -->
+      <p v-if="!seen">느낌표를 이용해 부정하기</p>
+      
+      <!-- 2. v-for -->
+      <h2>v-for</h2>
+      <!-- (without) v-for -->
+      <ol class="todo-list">
+        <li>따릉이티기</li>
+        <li>코딩하기</li>
+        <li>넷플릭스보기</li>
+      </ol>
+      <!-- (with) v-for -->
+      <!-- 데이터를 이용해 반복문을 쉽게 돌릴 수 있음 -->
+      <ol class="todo-list">
+        <li v-for="todo in todoList">{{ todo }}</li>
+      </ol>
+      <!-- 배열안에 객체를 넣어서 사용해보기 -->
+      <ol class="todo-list">
+        <li v-for="todo in todoList2">{{ todo.content }}</li>
+      </ol>
+
+      <!-- 3. v-on -->
+      <h2>v-on</h2>
+      <!-- (without) v-on -->
+      <button onclick="alert('짜잔')">click me</button> <!-- vanilla -->
+      <br>
+      <!-- v-on은 이벤트 발동 시, methods에 정의된 함수를 호출함 -->
+      {{ message }}
+      <button v-on:click="reversedMessage">메시지 뒤집기</button> <!-- 호출할 함수는 methods에 정의 -->
+      <br>
+      <!-- 자바스크립트에서 사용 가능한 어떠한 이벤트도 가능함 -->
+      <img v-on:mouseover="patPuppy" src="http://i.redd.it/dltqk6q2w0oz.jpg" alt="cute puppy" width="300">
+      <p>강아지 머리 {{ tapCount }}번 쓰다듬는 중</p>
+      <!-- event 객체가 필요한 경우, $event로 받아올 수 있음 -->
+      <img v-on: mouseover="patKitty('고양이', $event)" src="" alt="cute puppy">
+      <br>
+
+      <!-- v-on 축약형 (v-on: === @) -->
+      <!-- ex) @click, @mouseover, @keydown ... -->
+      {{ message }}
+      <button @click="reversedMessage">메시지 뒤집기2</button>
+
+      <!-- 4. v-bind -->
+      <!-- 태그의 속성에 데이터를 연결할 때는 반드시 {{}}가 아닌 v-bind를 사용함 -->
+      <h2>v-bind</h2>
+      <!-- (without) v-bind -->
+      <a href="http://www.google.com">go to google</a>
+      <!-- (with) v-bind -->
+      <a v-bind:href="google">go to google</a>
+      <!-- 주의* 이렇게는 안됩니다 -->
+      <a href="{{ google }}">go to google</a>
+      <br>
+      <!-- v-bind 축약형 -->
+      <a :href="google">go to google(축약형)</a> <!-- v-bind는 단방향, 태그에서 값을 바꿀 수는 없음 -->
+      
+      <!-- 5. v-model -->
+      <h2>v-model (양방향 바인딩)</h2> <!-- v-model은 양방향 -->
+      {{ userInput }}
+      <input type="text" v-model="userInput"> <!-- user에서 userInput 값을 바꾸기 가능 -->
+      <br>
+      <!-- v-model 아시안 문자 입력 이슈 해결 방법 (자동완성) -->
+      {{ userInput }}
+      <input type="text" @input="setMessage">
+  </div>
+
+  <!-- 연결시켜준 최상위 태그 안에서만 vue 코드 작성 가능 -->
+
+  <!-- vue cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#vue-directive-practice',
+      data: {
+        seen: '안녕',
+        todoList: ['따릉이타기', '코딩하기', '넷플릭스보기'],
+        todoList2: [
+          {content: '따릉이타기'},
+          {content: '코딩하기'},
+          {content: '넷플릭스보기'},
+        ],
+        message:'짱짱 이거 뒤집을 수 있니',
+        tapCount: 0,
+        google: 'http://www.google.com',
+        userInput: '',
+      },
+      methods: {
+        reversedMessage: function() { // 메소드는 화살표 함수 아닌 keyword function 사용
+          //console.log(this.message) // 메소드에서 데이터에 접근할 때 this를 사용
+          this.message = this.message.split('').reverse().join('')
+          console.log(this.message)
+        },
+        patPuppy: function(){
+          this.tapCount += 1
+        },
+        patKitty: function(name, event){
+          console.log(name)
+          console.log(event)
+        },
+        setMessage: function(event){
+          this.userInput = event.target.value
+        },
+      },
+    })
+  </script>
+</body>
+</html>

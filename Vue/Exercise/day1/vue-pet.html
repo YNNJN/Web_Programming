@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1>고양이 & 강아지 사진 가져오기</h1>
+    <input @keypress.enter="getPetImage" type="text">
+
+    <div class="dog-image">
+      <img :src="dogUrl" alt="dog image">
+    </div>
+    
+    <div class="cat-image">
+      <img :src="catUrl" alt="cat image">
+    </div>
+
+  </div>
+  <!-- vue cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- axios cdn-->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue ({
+      el: '#app',
+      data: {
+        catUrl: '',
+        dogUrl: '',
+      },
+      methods: {
+        getCatImage: function(){
+          axios.get('https://api.thecatapi.com/v1/images/search')
+            .then(response => {
+              this.catUrl = response.data[0].url
+            })
+        },
+        getDogImage: function() {
+          axios.get('http://dog.ceo/api/breeds/image/random')
+            .then(response => {
+              const src = response.data.message
+              this.dogUrl = src
+            })
+        },
+        // 다른 메서드에서 또다른 메서드를 호출할 수 있다. 이 때 this를 사용한다.
+        getPetImage: function(event) {
+          if (event.target.value === '고양이') {
+            this.getCatImage()
+          } else if (event.target.value === '강아지') {
+            this.getDogImage()
+          }
+        },
+      },
+    })
+  </script>
+</body>
+</html>
