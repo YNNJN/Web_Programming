@@ -30,6 +30,7 @@
         page: 1,
       },
       methods: {
+        // 객체 안에 정의되어 있는 함수 => function(){}
         getPhotos: function () {
           const options = {
             // pagination의 key point: 데이터를 분절하여 가져올 수 있다
@@ -39,13 +40,20 @@
             }
           }
           axios.get('https://jsonplaceholder.typicode.com/photos', options)
-            .then(res => { 
+            .then(res => { // callback 함수 => arrow function
               console.log('>>> GET PHOTOS <<<')
-              this.photos = [...this.photos, ...res.data]
+              this.photos = [...this.photos, ...res.data] // ... : array spread
             })
             .catch(err => console.error(err))
         }
       },
+
+      // vue 가 생성되는 순간 할 일을 정의함 - 초기화 하는 시점
+      created: function (){
+        // 초기화 이후 AJAX 요청을 보내기 좋은 Hook: created
+        this.getPhotos()
+      },
+  
     })
     
   </script>
