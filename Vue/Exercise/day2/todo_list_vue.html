@@ -15,6 +15,9 @@
 <body>
   <!-- 여기에 코드를 작성하시오 -->
   <div id="app">
+    
+    <!-- 검색 기능 -->
+    <input>
 
     <select v-model="status">
       <option value="all">전체</option>
@@ -100,14 +103,10 @@
           console.log(this.status)
           // 진행중인 일
           if (this.status === 'in-progress') {
-            return this.todos.filter(todo => {
-              return !todo.completed
-            })
+            return this.todos.filter(todo => !todo.completed)
           // 완료된 일
           } else if (this.status === 'completed') {
-            return this.todos.filter(todo => {
-              return todo.completed
-            })
+            return this.todos.filter(todo => todo.completed)
           } else {
             return this.todos // 전체 목록 그대로 리턴
           }
