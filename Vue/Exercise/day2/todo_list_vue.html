@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>0526 workshop</title>
+  <style>
+    /* 취소선 */
+  </style>
+</head>
+<body>
+  <!-- 여기에 코드를 작성하시오 -->
+  <div id="app">
+    <ul class="todo-list">
+      <!-- v-for가 v-if보다 우선순위를 가짐, 그러나 함께 쓰는 것 지양 -->
+      <li
+        v-for="todo in todos"
+        v-if="!todo.completed"
+        @click="check(todo)"
+      >
+        <input type="checkbox">
+        <span>{{ todo.content }}</span>
+      </li>
+      <li v-else @click="check(todo)">[완료]</li>
+    </ul>
+    
+    <!-- 할 일 추가하기 -->
+    <input type="text" v-model="newTodo">
+    <button @click="addTodo">+</button>
+    <br>
+
+    <!-- 완료된 일 삭제하기 -->
+    <button @click="deleteCompleted">
+    -
+    </button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    // 여기에 코드를 작성하시오
+    const app = new Vue({
+      el: '#app',
+      data: {
+        todos: [
+          {
+            content: '밤 산책하기',
+            completed: false,
+          },
+          {
+            content: '코딩하기',
+            completed: false,
+          },
+          {
+            content: 'vue 공부하기',
+            completed: false,
+          },
+        ],
+        newTodo: '',
+      },
+      methods: {
+        check: function(todo) {
+          todo.completed = !todo.completed
+        },
+        addTodo: function(){
+          if (this.newTodo.trim().length >= 1) { // trim() -> 공백 제거
+          const newEntry = {
+            content: this.newTodo,
+            completed: false
+          }
+          this.todos.push(newEntry)
+          this.newTodo = ''
+          }
+        },
+        deleteCompleted: function() {
+          // UX의 측면에서, 삭제 시엔 사용자의 동의 구해야
+          const isAgreed = confirm('정말로 끝내셨나요?') // 확인 -> true, 취소 -> false 반환
+          if (isAgreed) {
+            const notCompletedTodos = this.todos.filter(todo => {
+            return todo.completed === false
+            })
+            this.todos = notCompletedTodos
+          }
+        },
+      },
+    })
+  </script>
+</body>
+</html>
