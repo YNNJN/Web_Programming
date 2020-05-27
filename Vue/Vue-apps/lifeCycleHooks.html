@@ -59,6 +59,7 @@
           const watcher = scrollMonitor.create(bottomSensor)
           // watcher 가 화면에 들어오면 콜백함수를 실행하겠다
           watcher.enterViewport(() => {
+            // 서버 과부하를 막기 위한 장치
             setTimeout(() => {
               this.getPhotos()
             }, 500)
@@ -67,6 +68,14 @@
 
         scrollToTop: function () {
           window.scroll(0,0) // window는 생략 가능
+        },
+
+        loadUntilViewportIsFull: function () {
+          const bottomSensor = document.querySelector('#bottomSensor')
+          const watcher = scrollMonitor.create(bottomSensor)
+          if (watcher.isFullyInViewport) {
+            this.getPhotos()
+          }
         }
       },
 
@@ -75,11 +84,15 @@
         this.getPhotos()
       },
 
-      // mounted: DOM과 Vue 인스턴스가 연동이 완료되고 난 이후에 실행할 일들
+      // mounted: DOM과 Vue 인스턴스가 bind(연동)가 완료된 후에 실행할 일들
       mounted: function () {
         this.addScrollWatcher()
-      }
-  
+      },
+
+      // updated: data({})가 바뀌고, 화면이 다시 렌더된 이후
+      updated: function () {
+        this.loadUntilViewportIsFull()
+      },  
     })
     
   </script>
