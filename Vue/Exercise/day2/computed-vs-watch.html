@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1>count: {{ count }}</h1>
+    <h1>computed: {{ calculated }}</h1>
+    <button @click="increaseCount">카운트 증가</button>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue ({
+      el: "#app",
+      data: {
+        count: 0,
+      },
+
+      // methods는 reload 할 때마다 바뀜
+      // 저장하지 않고, 불릴 때마다 새로 쓰임
+      // 실행에 10초 걸리는 내용이 있다면 낭비 심할 것
+      methods: {
+        increaseCount: function () {
+          this.count++
+        },
+      },
+      /*
+      computed는 단순히 data로부터 계산된 값을 출력하기 위한 속성
+      계산해야 하는 목표 데이터를 정의하는 방식으로, 해당 속성이 종속된 대상이 변경될 때만 함수를 실행함
+      소프트웨어 공학에서 얘기하는 '선언형(무엇을 할지 나열) 프로그래밍' 방식
+      */
+      // computed는 한번에 caching 해둠
+      // 값의 변경이 있어야지만 update 됨
+      // Read data 할 때 한 번만 띄워놓고 쓰면 됨
+      computed: {
+        calculated: function () {
+          return this.count*3 
+        },
+      },
+      /*
+      특정한 data의 변경을 관찰하고, 이어서 일어날 동작(로직)을 설정하기 위한 속성
+      감시할 데이터를 지정하고 그 데이터가 바뀌면 이런 함수를 실행하라는 방식
+      소프트웨어 공학에서 얘기하는 '명령형(어떻게 할지) 프로그래밍' 방식
+      비동기 로직을 수행할 때 사용함
+      */
+      watch: {
+        count: function (newVal, oldVal) {
+          console.log(newVal)
+        },
+      },
+    })
+
+  </script>
+</body>
+</html>
